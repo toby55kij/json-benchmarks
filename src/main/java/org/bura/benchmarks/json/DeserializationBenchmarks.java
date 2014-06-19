@@ -14,7 +14,7 @@ import org.boon.json.JsonParser;
 import org.boon.json.implementation.JsonFastParser;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
@@ -69,7 +69,7 @@ public class DeserializationBenchmarks {
     private final ObjectMapper jacksonMapper = new ObjectMapper();
     private TypeReference<?> jacksonType;
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public Object jackson() throws IOException {
         return jacksonMapper.readValue(resource, jacksonType);
     }
@@ -77,21 +77,21 @@ public class DeserializationBenchmarks {
     private final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
     private java.lang.reflect.Type gsonType;
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public Object gson() {
         return gson.fromJson(resource, gsonType);
     }
 
     private final JsonParser boon = new JsonFastParser();
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public Object boon() {
         return boon.parse(resource);
     }
 
     private final JsonSlurper groovy = new JsonSlurper();
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public Object groovy() {
         return groovy.parseText(resource);
     }

@@ -18,7 +18,7 @@ import org.bura.benchmarks.json.domain.Request;
 import org.bura.benchmarks.json.domain.UserProfile;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
@@ -100,21 +100,21 @@ public class SerializationBenchmarks {
 
     private final ObjectMapper jacksonMapper = initMapper();
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public String jackson() throws IOException {
         return jacksonMapper.writeValueAsString(data);
     }
 
     private final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public String gson() {
         return gson.toJson(data);
     }
 
     private final JsonSimpleSerializerImpl boon = new JsonSimpleSerializerImpl();
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public String boon() {
         return boon.serialize(data).toString();
     }
@@ -124,7 +124,7 @@ public class SerializationBenchmarks {
      */
     private boolean needCastToMap;
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public String groovy() {
         String json;
         if (needCastToMap) {
